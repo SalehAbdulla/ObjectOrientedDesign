@@ -144,6 +144,22 @@ namespace SCAIS.Domain
         }
 
         /// <summary>
+        /// Gets the stored password hash so that the data layer can persist it.
+        /// </summary>
+        /// <remarks>
+        /// This member is <c>internal</c>, not <c>public</c>. Inside the SCAIS assembly
+        /// the repository can read the credential in order to write it to the database,
+        /// but any code outside the assembly - and every screen in the user interface -
+        /// cannot see it at all. That is the third level of encapsulation in this class:
+        /// <c>private</c> for the validation helpers, <c>internal</c> for persistence,
+        /// and <c>public</c> for the behaviour the rest of the system is allowed to use.
+        /// </remarks>
+        internal string PasswordHashForPersistence
+        {
+            get { return this.passwordHash; }
+        }
+
+        /// <summary>
         /// Gets a human readable description of the account, produced differently by
         /// each role. This is the polymorphic member used by the shell header.
         /// </summary>
