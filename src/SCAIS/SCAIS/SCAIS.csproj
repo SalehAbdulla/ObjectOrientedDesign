@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>SCAIS</RootNamespace>
+    <AssemblyName>SCAIS</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <Deterministic>true</Deterministic>
+    <Company>Bahrain Institute of Technology</Company>
+    <Product>Smart Course Advising Information System</Product>
+    <AssemblyTitle>SCAIS</AssemblyTitle>
+    <Description>Smart Course Advising Information System - IT7006 Object Oriented Design group project.</Description>
+  </PropertyGroup>
+
+  <!--
+    The reference assemblies package lets this project be compiled on any
+    platform (it supplies the .NET Framework 4.8 reference assemblies). It is
+    marked PrivateAssets="all" so it never becomes a runtime dependency.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <!--
+    The database scripts are embedded so that DatabaseManager can bootstrap a
+    missing database at start-up without depending on any external file path.
+    LogicalName is fixed so the resource lookup is deterministic.
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="Database\01_schema.sql">
+      <LogicalName>SCAIS.Database.Schema.sql</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\02_seed.sql">
+      <LogicalName>SCAIS.Database.Seed.sql</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
