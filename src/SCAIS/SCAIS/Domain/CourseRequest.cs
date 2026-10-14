@@ -223,6 +223,27 @@ namespace SCAIS.Domain
         }
 
         /// <summary>
+        /// Restores a plan that was loaded from the database back to the state it was
+        /// saved in.
+        /// </summary>
+        /// <remarks>
+        /// This member is <c>internal</c> rather than <c>public</c> on purpose. Restoring
+        /// a persisted state is a concern of the data layer, not of the user interface,
+        /// so only code inside the SCAIS assembly can call it. Screens therefore cannot
+        /// bypass <see cref="Submit"/>, <see cref="Approve"/> and <see cref="Reject"/>,
+        /// and the guards in those methods remain the only way the state can move.
+        /// </remarks>
+        /// <param name="status">The stored status name.</param>
+        /// <param name="submittedDate">The stored submission date.</param>
+        /// <param name="adviserRemark">The stored adviser remark.</param>
+        internal void RestoreState(string status, DateTime? submittedDate, string adviserRemark)
+        {
+            this.status = (RequestStatus)Enum.Parse(typeof(RequestStatus), status, true);
+            this.submittedDate = submittedDate;
+            this.adviserRemark = adviserRemark;
+        }
+
+        /// <summary>
         /// Moves the plan from Draft to Submitted and announces the change.
         /// A plan with no courses cannot be submitted.
         /// </summary>
