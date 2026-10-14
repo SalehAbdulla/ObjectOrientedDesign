@@ -155,6 +155,23 @@ LEFT JOIN    dbo.Administrators  AS ad ON ad.UserId = u.UserId";
         }
 
         /// <summary>
+        /// Returns the adviser currently assigned to a student, or null when none is.
+        /// </summary>
+        /// <param name="studentId">The Students key to look up.</param>
+        /// <returns>The assigned AdviserId, or null.</returns>
+        public int? GetAdviserIdForStudent(int studentId)
+        {
+            List<int> matches = this.Query(
+                "SELECT AdviserId FROM dbo.Students WHERE StudentId = @StudentId;",
+                delegate(SqlDataReader reader) { return ToInt(reader, "AdviserId"); },
+                Param("@StudentId", studentId));
+
+            // A null column is read as zero by ToInt, and zero is not a valid key, so the
+            // absence of an adviser is reported as null rather than as a false assignment.
+            return matches.Count == 0 || matches[0] == 0 ? (int?)null : matches[0];
+        }
+
+        /// <summary>
         /// Narrows a mixed account list to the students it contains.
         /// </summary>
         private List<Student> StudentsFrom(List<User> accounts)
