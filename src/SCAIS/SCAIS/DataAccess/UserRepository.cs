@@ -138,6 +138,23 @@ LEFT JOIN    dbo.Administrators  AS ad ON ad.UserId = u.UserId";
         }
 
         /// <summary>
+        /// Returns the Users key that owns the supplied student. Notifications are
+        /// addressed to the account rather than to the student record, so the mapping
+        /// has to be resolved from the database rather than assumed.
+        /// </summary>
+        /// <param name="studentId">The Students key to resolve.</param>
+        /// <returns>The matching UserId, or zero when the student does not exist.</returns>
+        public int GetUserIdForStudent(int studentId)
+        {
+            List<int> matches = this.Query(
+                "SELECT UserId FROM dbo.Students WHERE StudentId = @StudentId;",
+                delegate(SqlDataReader reader) { return ToInt(reader, "UserId"); },
+                Param("@StudentId", studentId));
+
+            return matches.Count == 0 ? 0 : matches[0];
+        }
+
+        /// <summary>
         /// Narrows a mixed account list to the students it contains.
         /// </summary>
         private List<Student> StudentsFrom(List<User> accounts)
