@@ -1,0 +1,41 @@
+# ---------------------------------------------------------------------------
+# SCAIS - IT7006 Object Oriented Design Project
+# ---------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Visual Studio / MSBuild
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.suo
+packages/
+*.nupkg
+*.binlog
+
+# Visual Studio Code
+.vscode/
+
+# NOTE: Do NOT ignore *.mdf / *.ldf.
+# The assignment requires the SQL Server LocalDB database file to be shipped
+# inside the Visual Studio project, so those files must be committed.
+
+# Enterprise Architect temporary / backup files
+*.eap.bak
+*.eapx.bak
+*.qea.bak
+*.~*
+*.tmp
+
+# OS / editor junk
+Thumbs.db
+desktop.ini
+*~
