@@ -65,10 +65,26 @@ Submission zip must be named `S1G1` (Stream 1, Group 1) and contain: Project Rep
 
 ## 5. Where to start
 
-1. Read [`docs/01-full-marks-plan.md`](docs/01-full-marks-plan.md) — the master plan and rubric→evidence map.
-2. Read [`docs/05-work-distribution.md`](docs/05-work-distribution.md) — who owns what.
+### The plan and the design
+1. [`docs/01-full-marks-plan.md`](docs/01-full-marks-plan.md) — the master plan and rubric→evidence map.
+2. [`docs/05-work-distribution.md`](docs/05-work-distribution.md) — who owns what.
 3. Design specs: [`docs/02-architecture-and-class-design.md`](docs/02-architecture-and-class-design.md), [`docs/03-database-design.md`](docs/03-database-design.md), [`docs/04-design-patterns.md`](docs/04-design-patterns.md).
-4. Report skeleton: [`docs/06-report-structure.md`](docs/06-report-structure.md).
+
+### The working application
+4. [`src/SCAIS/README.md`](src/SCAIS/README.md) — how to build, run and demonstrate it, with a nine-step path that exercises every use case.
+5. [`docs/07-verification.md`](docs/07-verification.md) — what was verified and how, including the database checks run against a live engine.
+
+### The diagrams (for redrawing in Enterprise Architect)
+6. [`docs/uml/README.md`](docs/uml/README.md) — the diagram index and the EA redraw guide.
+7. The twelve diagram sources are in [`docs/uml/`](docs/uml), each with an element checklist. Rendered PNGs are in [`docs/uml/png/`](docs/uml/png).
+8. [`docs/uml/07-consistency-checklist.md`](docs/uml/07-consistency-checklist.md) — the two consistency marks.
+
+### The report
+9. [`docs/report/README.md`](docs/report/README.md) — the assembly guide, mapping each section to its marks.
+10. Sections 1 to 7 follow the official template exactly.
+
+### Earlier drafts
+11. [`docs/06-report-structure.md`](docs/06-report-structure.md) — the original report guide, superseded by `docs/report/`.
 
 ---
 
@@ -78,3 +94,7 @@ The assessment cover sheet states that **the use of generative AI tools is stric
 All UML diagrams, source code and report prose in this repository must be
 produced and understood by the team members themselves. Each member must be able
 to explain *any* part of the system, not only their own, during the progress check.
+
+`docs/uml/` contains diagram **sources** rather than a finished Enterprise Architect file: the
+team must redraw every diagram in EA, which is both a requirement of the brief and a way of
+ensuring the model is understood rather than accepted.
