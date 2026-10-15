@@ -206,20 +206,37 @@ namespace SCAIS.UI
 
                 this.gridAdvisees.DataSource = null;
                 this.gridAdvisees.DataSource = rows;
-                this.gridRecord.DataSource = null;
-                this.gridEligible.DataSource = null;
 
                 this.lblStatus.Text = rows.Count == 0
                     ? "No students are assigned to you yet."
                     : rows.Count + " student(s) assigned to you.";
+
+                // Binding a list does not raise SelectionChanged reliably, so the first advisee
+                // is selected and shown explicitly. Without this the screen opened with the
+                // advisee list filled in and the record and the recommendations beside it empty
+                // until the adviser clicked a row.
+                if (rows.Count > 0)
+                {
+                    this.gridAdvisees.CurrentCell = this.gridAdvisees.Rows[0].Cells[0];
+                    this.ShowDetailsFor(rows[0].Student);
+                }
             });
         }
 
         /// <summary>Shows the record and the recommendations for the selected advisee.</summary>
         private void OnAdviseeSelected(object sender, EventArgs e)
         {
-            Student student = this.SelectedStudent();
+            this.ShowDetailsFor(this.SelectedStudent());
+        }
 
+        /// <summary>
+        /// Shows one advisee's academic record and the courses that advisee is eligible for.
+        /// Called both when the adviser selects a row and when the screen opens, so the two
+        /// paths cannot drift apart.
+        /// </summary>
+        /// <param name="student">The advisee to show, or null to clear the two grids.</param>
+        private void ShowDetailsFor(Student student)
+        {
             this.gridRecord.DataSource = null;
             this.gridEligible.DataSource = null;
 

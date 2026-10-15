@@ -168,10 +168,25 @@ namespace SCAIS.Business
                 return new EligibilityResult(true, "Eligible");
             }
 
+            // Each rule's refusal already begins with the Blocked prefix, so the combined note
+            // strips it from the parts and adds it once. Without this the screens and the
+            // eligibility note stored against a requested course read "Blocked: Blocked: ...".
+            List<string> reasons = new List<string>();
+            string prefix = EligibilityResult.BlockedPrefix + ": ";
+
+            for (int index = 0; index < failures.Count; index++)
+            {
+                string failure = failures[index];
+
+                reasons.Add(failure.StartsWith(prefix, StringComparison.Ordinal)
+                    ? failure.Substring(prefix.Length)
+                    : failure);
+            }
+
             // The note stored against a requested course must begin with "Blocked" so
             // that CourseRequestLine can report the verdict without another column.
             return new EligibilityResult(false,
-                EligibilityResult.BlockedPrefix + ": " + string.Join("; ", failures.ToArray()));
+                prefix + string.Join("; ", reasons.ToArray()));
         }
 
         /// <summary>

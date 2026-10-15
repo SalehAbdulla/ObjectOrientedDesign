@@ -32,15 +32,14 @@ They are listed here so none is forgotten:
 | To do | Where it goes |
 |---|---|
 | Export the EA diagrams as PNG and paste them in | §2, §5, §6 |
-| Screenshot the 11 running screens | §4 |
 | Screenshot the code that proves each OO concept | §3.1 to §3.6 |
 | Fill in the cover sheet and the work distribution plan | front matter |
 
-Two of the thirteen screens are already captured and stored in
-[`../screenshots/`](../screenshots): `01-frmLogin.png` (screen 1) and
-`03-frmStudentDashboard.png` (screen 3). They were taken from the running application during the
-verification run described in [`../07-verification.md`](../07-verification.md); the remaining eleven
-still have to be captured from Visual Studio.
+**The thirteen screen screenshots are already captured** and stored in
+[`../screenshots/`](../screenshots), which lists each file against the placeholder it belongs to. They
+were taken from the running application during the verification run described in
+[`../07-verification.md`](../07-verification.md). What is still missing from §4 is only the manual
+step of pasting them in.
 
 ---
 

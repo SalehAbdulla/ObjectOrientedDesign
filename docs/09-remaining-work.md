@@ -10,36 +10,22 @@ The state of the code and the evidence for it are recorded in
 
 ---
 
-## 1. Screenshots — 11 of 13 still to capture
+## 1. Screenshots
 
-Two are already captured from the running application and stored in [`screenshots/`](screenshots).
-Capture the rest from Visual Studio using the nine-step path in
-[`08-windows-first-run-and-test.md`](08-windows-first-run-and-test.md) §4, and name them so the number
-matches the screen number in [`report/04-user-interface-design.md`](report/04-user-interface-design.md).
+**All thirteen screens are captured.** They are stored in [`screenshots/`](screenshots), which carries
+the mapping onto the report's `[SCREENSHOT: ...]` placeholders. They were taken from the running
+application with the window frame included, exactly as `Alt` + `Print Screen` produces.
 
-| # | Screen | Placeholder in the report | Status |
-|---|---|---|---|
-| 1 | `frmLogin` | `[SCREENSHOT: frmLogin]` | **captured** — `screenshots/01-frmLogin.png` |
-| 2 | `frmAdminDashboard` | `[SCREENSHOT: frmAdminDashboard]` | to capture |
-| 3 | `frmStudentDashboard` | `[SCREENSHOT: frmStudentDashboard]` | **captured** — `screenshots/03-frmStudentDashboard.png` |
-| 4 | `frmAdviserDashboard` | `[SCREENSHOT: frmAdviserDashboard]` | to capture |
-| 5 | `frmMyAcademicRecord` | three tabs: My record, Eligible courses, My requests | to capture |
-| 6 | `frmCourseRequestReview` | `[SCREENSHOT: frmCourseRequestReview]` | to capture |
-| 7 | `frmAdviseeList` | `[SCREENSHOT: frmAdviseeList]` | to capture |
-| 8 | `frmCourseCatalog` | the Courses tab and the Rules tab | to capture |
-| 9 | `frmUserManagement` | `[SCREENSHOT: frmUserManagement]` | to capture |
-| 10 | `frmAssignAdvisees` | `[SCREENSHOT: frmAssignAdvisees]` | to capture |
-| 11 | `frmReports` | the progression report and the compliance report | to capture |
-| 12 | `frmMessages` | `[SCREENSHOT: frmMessages]` | to capture |
-| 13 | `frmCourseOfferings` | `[SCREENSHOT: frmCourseOfferings]` | to capture |
-
-Also needed: the **code screenshots** that prove each OO concept, listed in
+What is still outstanding is the **code** screenshots: the ones that prove each OO concept, listed in
 [`08-windows-first-run-and-test.md`](08-windows-first-run-and-test.md) §5 and marked `[CODE: ...]`
 throughout [`report/03-object-oriented-design.md`](report/03-object-oriented-design.md) and
-[`report/06-design-pattern.md`](report/06-design-pattern.md).
+[`report/06-design-pattern.md`](report/06-design-pattern.md). Each must show the class declaration,
+the members the report makes a claim about, and enough context to show it is real code.
 
-**Tip.** `Alt` + `Print Screen` captures the active window only, which is what the report wants. Do
-not capture the whole desktop.
+One more screenshot is worth taking by hand, because the automated pass could not produce it: open
+`frmMyAcademicRecord` as `student02`, add **IT221** to the plan, and capture the plan grid. The Verdict
+column then reads *"Blocked: Prerequisite - must first complete IT220"*, which is the clearest single
+piece of evidence for the block-or-warn requirement.
 
 ---
 

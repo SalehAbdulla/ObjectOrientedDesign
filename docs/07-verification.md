@@ -97,7 +97,7 @@ real SQL Server LocalDB 16.0 instance; 0 failed.** The run covered:
 | Seeded logins | `student02`, `adviser02` and `admin` all signed in through `AuthenticationService`; a wrong password and an unknown account were refused with the same message |
 | The advising workflow | IT221 was refused for `student02` naming IT220; a plan was built, submitted, found in the adviser's queue, approved with a remark, seen by the student, and produced a pending enrolment |
 | The Observer pattern | the approval wrote the student's notification **and** the `SCAIS-audit.log` file |
-| The user interface | the application was launched, and the login screen and the student dashboard were captured and inspected |
+| The user interface | the application was launched and all thirteen screens were captured and inspected: the login screen, the three dashboards, the three tabs of the student's record, the adviser's advisee list and review queue, the catalogue and its rules tab, user management, advisee assignment, both reports, the messages screen and the timetable |
 
 ### 2.2 The two defects the run found, and the fixes
 
@@ -105,6 +105,8 @@ real SQL Server LocalDB 16.0 instance; 0 failed.** The run covered:
 |---|---|---|
 | A student's assigned adviser was never loaded | `Student.Adviser` was always null, so `CourseAdvisingService.CreateRequest` filed every new plan with `AdviserId = NULL` and **the plan never appeared in any adviser's queue** — the submit → review → approve path could not complete. The student dashboard also always reported "Adviser: not yet assigned" | `UserRepository` now reads the assigned adviser in the same account query (two extra `LEFT JOIN`s) and sets `Student.Adviser` in `MapAccount` |
 | The dashboard chrome docked in the wrong order | WinForms resolves docking in reverse z-order, so adding the header first pushed it *down* over the top of the menu: the header appeared below the profile strip and the first menu caption and function were hidden behind it | `DashboardForm.BuildShell` now adds the strips in reverse: menu, status line, profile strip, header |
+| The adviser's advisee list opened with its detail grids empty | `ReloadAdvisees` cleared the record and recommendation grids and relied on `SelectionChanged`, which binding a list does not raise, so the adviser's main screen listed four advisees and showed nothing about any of them until a row was clicked | `frmAdviseeList` now selects the first advisee and shows it through the same `ShowDetailsFor` method that the selection handler uses |
+| Every refusal read "Blocked: Blocked: ..." | `EligibilityResult.Fail` adds the Blocked prefix and `EligibilityValidator` added it a second time when combining the failures, so the text was doubled on screen and in the eligibility note stored against a requested course | The validator strips the prefix from each part and adds it once, which keeps the `CourseRequestLine.IsEligible` contract intact |
 
 The login screen also clipped the demonstration credentials (a 60-pixel label cap on four lines of
 text) and was stretched to the theme's 760x500 minimum although it is a fixed 520x430 dialog; both

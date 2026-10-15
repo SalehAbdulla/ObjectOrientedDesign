@@ -170,10 +170,11 @@ the report makes a claim about, and enough context to prove it is real code.
 | 4 | Null reference exception when clicking a grid | A `SelectionChanged` handler firing before a row exists | Send the stack trace. It will be a missing null guard |
 | 5 | *"The designer could not be shown"* when double-clicking a form | **Expected.** The forms are laid out in code rather than in a `.Designer.cs` file, which is a stated limitation (§7.5 of the report) | Ignore it. It does not affect running the application |
 
-Two further defects were found by the first real run and are also fixed: the login screen clipped
-the demonstration credentials (the label was capped at 60 pixels for four lines of text), and it was
-stretched to the theme's 760x500 minimum size although it is a fixed 520x430 dialog, which left the
-content stranded in one corner.
+Four further defects were found while the screens were being captured and are also fixed: the login
+screen clipped the demonstration credentials (the label was capped at 60 pixels for four lines of
+text) and was stretched to the theme's 760x500 minimum size although it is a fixed 520x430 dialog; the
+adviser's advisee list opened with its record and recommendation grids empty until a row was clicked;
+and every refusal read *"Blocked: Blocked: ..."* because the prefix was applied twice.
 
 **One environment note.** SQL Server LocalDB has no ARM64 build, so on Windows on ARM it runs under
 x64 emulation, and installing it needs administrator rights. An ordinary x64 Windows machine with
