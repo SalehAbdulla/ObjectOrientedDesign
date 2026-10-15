@@ -71,20 +71,21 @@ Submission zip must be named `S1G1` (Stream 1, Group 1) and contain: Project Rep
 3. Design specs: [`docs/02-architecture-and-class-design.md`](docs/02-architecture-and-class-design.md), [`docs/03-database-design.md`](docs/03-database-design.md), [`docs/04-design-patterns.md`](docs/04-design-patterns.md).
 
 ### The working application
-4. [`src/SCAIS/README.md`](src/SCAIS/README.md) — how to build, run and demonstrate it, with a nine-step path that exercises every use case.
-5. [`docs/07-verification.md`](docs/07-verification.md) — what was verified and how, including the database checks run against a live engine.
+4. [`docs/08-windows-first-run-and-test.md`](docs/08-windows-first-run-and-test.md) — **start here to run it.** Pre-flight checklist, the nine-step demonstration path, the screenshot checklist, and the five most likely first-run failures with their fixes.
+5. [`src/SCAIS/README.md`](src/SCAIS/README.md) — the application's own README: architecture, credentials and the demonstration script.
+6. [`docs/07-verification.md`](docs/07-verification.md) — what was verified and how, including the database checks run against a live engine.
 
 ### The diagrams (for redrawing in Enterprise Architect)
-6. [`docs/uml/README.md`](docs/uml/README.md) — the diagram index and the EA redraw guide.
-7. The twelve diagram sources are in [`docs/uml/`](docs/uml), each with an element checklist. Rendered PNGs are in [`docs/uml/png/`](docs/uml/png).
-8. [`docs/uml/07-consistency-checklist.md`](docs/uml/07-consistency-checklist.md) — the two consistency marks.
+7. [`docs/uml/README.md`](docs/uml/README.md) — the diagram index and the EA redraw guide.
+8. The twelve diagram sources are in [`docs/uml/`](docs/uml), each with an element checklist. Rendered PNGs are in [`docs/uml/png/`](docs/uml/png).
+9. [`docs/uml/07-consistency-checklist.md`](docs/uml/07-consistency-checklist.md) — the two consistency marks.
 
 ### The report
-9. [`docs/report/README.md`](docs/report/README.md) — the assembly guide, mapping each section to its marks.
-10. Sections 1 to 7 follow the official template exactly.
+10. [`docs/report/README.md`](docs/report/README.md) — the assembly guide, mapping each section to its marks.
+11. Sections 1 to 7 follow the official template exactly.
 
 ### Earlier drafts
-11. [`docs/06-report-structure.md`](docs/06-report-structure.md) — the original report guide, superseded by `docs/report/`.
+12. [`docs/06-report-structure.md`](docs/06-report-structure.md) — the original report guide, superseded by `docs/report/`.
 
 ---
 
