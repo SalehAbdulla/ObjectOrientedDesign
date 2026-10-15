@@ -98,6 +98,11 @@ Being explicit about the limits of the evidence is better than overclaiming:
 | SQL Server **LocalDB** specifically | LocalDB is a Windows-only feature | The Windows virtual machine; the schema was validated against a T-SQL compatible engine |
 | The WinForms designer opening each form | Requires Visual Studio | The Windows virtual machine |
 
+**The procedure for closing these three gaps is
+[`08-windows-first-run-and-test.md`](08-windows-first-run-and-test.md)** — the pre-flight
+checklist, the build steps, the nine-step demonstration path, and the five most likely
+first-run failures with their fixes.
+
 ---
 
 ## 4. Reproducing the database check
