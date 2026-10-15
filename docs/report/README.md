@@ -36,6 +36,12 @@ They are listed here so none is forgotten:
 | Screenshot the code that proves each OO concept | §3.1 to §3.6 |
 | Fill in the cover sheet and the work distribution plan | front matter |
 
+Two of the thirteen screens are already captured and stored in
+[`../screenshots/`](../screenshots): `01-frmLogin.png` (screen 1) and
+`03-frmStudentDashboard.png` (screen 3). They were taken from the running application during the
+verification run described in [`../07-verification.md`](../07-verification.md); the remaining eleven
+still have to be captured from Visual Studio.
+
 ---
 
 ## 3. Assembly order

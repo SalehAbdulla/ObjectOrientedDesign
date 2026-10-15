@@ -84,8 +84,11 @@ Submission zip must be named `S1G1` (Stream 1, Group 1) and contain: Project Rep
 10. [`docs/report/README.md`](docs/report/README.md) — the assembly guide, mapping each section to its marks.
 11. Sections 1 to 7 follow the official template exactly.
 
+### What is left to do
+12. [`docs/09-remaining-work.md`](docs/09-remaining-work.md) — the screenshots, the Enterprise Architect model, the report assembly, the demonstration video and the submission package: everything that needs a person at the machine.
+
 ### Earlier drafts
-12. [`docs/06-report-structure.md`](docs/06-report-structure.md) — the original report guide, superseded by `docs/report/`.
+13. [`docs/06-report-structure.md`](docs/06-report-structure.md) — the original report guide, superseded by `docs/report/`.
 
 ---
 

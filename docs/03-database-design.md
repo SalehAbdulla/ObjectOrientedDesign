@@ -1,7 +1,7 @@
 # 03 — Database Design Specification (SQL Server LocalDB)
 
 Target: **SQL Server LocalDB**, database file `SCAIS.mdf` stored **inside the
-Visual Studio project** (required by the brief). 12 tables, 3rd Normal Form,
+Visual Studio project** (required by the brief). 13 tables, 3rd Normal Form,
 **≥15 mock records in every table**.
 
 ---

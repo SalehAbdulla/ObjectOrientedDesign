@@ -87,9 +87,9 @@ PNG locally, either
 | Quantity | Value |
 |---|---|
 | Actors | 3 |
-| Use cases | 19 |
-| Domain classes | 13 |
-| Service and data classes | 15 |
+| Use cases | 21 |
+| Domain classes | 14 |
+| Service and data classes | 16 |
 | Interfaces | 3 |
 | Sequence diagrams | 4 |
 | Database tables | 13 |

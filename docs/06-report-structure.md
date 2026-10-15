@@ -108,7 +108,7 @@ classes it uses.** That is the "integration with OO classes" mark (3 of the 10).
 
 ## 5. Database Design — 10 marks
 
-- The **ERD** (from EA) with all 12 tables, PK/FK, cardinalities.
+- The **ERD** (from EA) with all 13 tables, PK/FK, cardinalities.
 - A paragraph on **3NF** (see `03-database-design.md` §1).
 - A screenshot of the seeded data proving **≥15 records per table**
   (`SELECT COUNT(*) FROM <table>` for each table).
@@ -135,7 +135,7 @@ Include the pattern UML from EA and a code snippet for each.
 
 ## 7. Conclusion
 
-- What was developed (SCAIS: 3 roles, 19 use cases, 12 tables, 3 patterns, 3 reports).
+- What was developed (SCAIS: 3 roles, 21 use cases, 13 tables, 3 patterns, 2 reports).
 - How the system meets the requirements (map back to the objectives in §1.3).
 - How OO concepts were applied (one sentence per concept).
 - **Limitations & future work** — honesty here reads as understanding: e.g. no

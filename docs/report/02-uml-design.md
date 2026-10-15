@@ -37,16 +37,16 @@ one model. Both are in [`../uml/02-class-diagram.md`](../uml/02-class-diagram.md
 
 `[DIAGRAM: class-domain — exported from EA]`
 
-13 domain classes: the abstract `User` with its three subclasses, and the classes that make up
-the advising domain — `Specialization`, `Course`, `Prerequisite`, `Enrollment`, `CourseRequest`,
-`CourseRequestLine`, `Semester`, `Notification` and `EligibilityResult`, plus the
+14 domain classes: the abstract `User` with its three subclasses, and the classes that make up
+the advising domain — `Specialization`, `Course`, `CourseOffering`, `Prerequisite`, `Enrollment`,
+`CourseRequest`, `CourseRequestLine`, `Semester`, `Notification` and `EligibilityResult`, plus the
 `IUserObserver` contract.
 
 ### View 2 — the services, interfaces and data layer
 
 `[DIAGRAM: class-services — exported from EA]`
 
-The three interfaces, the eight repositories, the abstract `SqlRepositoryBase<T>`, the
+The three interfaces, the nine repositories, the abstract `SqlRepositoryBase<T>`, the
 `DatabaseManager` Singleton, the four services, the two observers and the two factories.
 
 ### What the diagram demonstrates

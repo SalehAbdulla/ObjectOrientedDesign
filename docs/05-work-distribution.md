@@ -26,9 +26,9 @@ Fill in the **Name** column with the real team members before submitting.
 |---|---|---|---|---|
 | WP1 | **Requirements & Use Case** | 19 use cases, use-case diagram, report §1 (Overview, problem, objectives, users, functions) | _TBD_ | 14 |
 | WP2 | **Class diagram & OO model** | Class diagram with visibility + multiplicity, relationship justification table, report §3.1–3.2 | _TBD_ | 16 |
-| WP3 | **Database & data layer** | ERD, `SCAIS.mdf`, 12 tables, seed script (≥15 rows/table), `IRepository<T>`, all repositories | _TBD_ | 16 |
+| WP3 | **Database & data layer** | ERD, `SCAIS.mdf`, 13 tables, seed script (≥15 rows/table), `IRepository<T>`, all repositories | _TBD_ | 16 |
 | WP4 | **Business logic & patterns** | `User` hierarchy, `EligibilityValidator` + 5 rules, `DatabaseManager`, `CourseRequest` Observer, pattern UML + report §6 | _TBD_ | 16 |
-| WP5 | **UI implementation** | 14 forms, navigation, validation, data binding, report §4 screenshots | _TBD_ | 18 |
+| WP5 | **UI implementation** | 15 forms, navigation, validation, data binding, report §4 screenshots | _TBD_ | 18 |
 | WP6 | **Reports, sequence diagrams, integration & packaging** | 2 reports, 4 sequence diagrams, consistency pass, report assembly, demo video, `S1G1.zip` | _TBD_ | 16 |
 
 **Pairing rule:** no work package is owned by only one person end-to-end.

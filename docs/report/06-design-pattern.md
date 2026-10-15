@@ -140,7 +140,7 @@ pass the null check and create two managers, which would defeat the entire purpo
 |---|---|---|
 | `DatabaseManager` | Singleton | Owns the connection string, creates connections, and bootstraps the database on first run |
 | `SqlRepositoryBase<T>` | Client | Calls `DatabaseManager.Instance.CreateConnection()`; never builds a connection string itself |
-| The eight concrete repositories | Indirect clients | Inherit the behaviour from `SqlRepositoryBase<T>` |
+| The nine concrete repositories | Indirect clients | Inherit the behaviour from `SqlRepositoryBase<T>` |
 | `Program.Main` | Startup client | Calls `Instance.EnsureDatabase()` once, before the login screen opens |
 
 **Interaction, in one sentence:** a repository method calls

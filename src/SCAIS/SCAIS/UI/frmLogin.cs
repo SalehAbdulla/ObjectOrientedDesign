@@ -68,6 +68,11 @@ namespace SCAIS.UI
             this.MinimizeBox = false;
             this.ClientSize = new Size(520, 430);
 
+            // The form is a fixed dialog, so the minimum size that the theme applies (which
+            // exists to keep the resizable screens usable) would only stretch it beyond the
+            // layout it was designed for and leave the content stranded in one corner.
+            this.MinimumSize = Size.Empty;
+
             this.Controls.Add(UiTheme.CreateHeader("Smart Course Advising Information System"));
 
             Label subtitle = UiTheme.CreateLabel("Bahrain Institute of Technology");
@@ -121,7 +126,9 @@ namespace SCAIS.UI
                 "    student             student01 / Student@123");
             hint.ForeColor = Color.DimGray;
             hint.Location = new Point(40, 352);
-            hint.MaximumSize = new Size(440, 60);
+            // Four lines of text need about 70 pixels; a 60 pixel cap cut the student's
+            // credentials off the bottom of the screen.
+            hint.MaximumSize = new Size(440, 80);
             this.Controls.Add(hint);
 
             this.AcceptButton = signIn;

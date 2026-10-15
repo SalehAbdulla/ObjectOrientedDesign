@@ -44,6 +44,7 @@ namespace SCAIS.UI
             {
                 this.AddMenuItem("Maintain course catalogue", this.OnCourseCatalogue);
                 this.AddMenuItem("Maintain prerequisite rules", this.OnCourseCatalogue);
+                this.AddMenuItem("Maintain course offerings per semester", this.OnCourseOfferings);
             }
 
             this.AddMenuCaption("Reporting");
@@ -70,6 +71,12 @@ namespace SCAIS.UI
         private void OnCourseCatalogue(object sender, EventArgs e)
         {
             this.OpenChild(new frmCourseCatalog());
+        }
+
+        /// <summary>Opens the timetable screen, where the offerings per semester are maintained.</summary>
+        private void OnCourseOfferings(object sender, EventArgs e)
+        {
+            this.OpenChild(new frmCourseOfferings());
         }
 
         /// <summary>Opens the reports screen.</summary>

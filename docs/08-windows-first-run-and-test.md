@@ -80,7 +80,7 @@ screenshots the report needs — so **capture as you go** rather than doing a se
 | 6 | Open **Review submitted course plans** — the plan just submitted is in the queue. Type a remark → **Approve plan** | `frmCourseRequestReview` |
 | 7 | **Check the audit log.** A file `SCAIS-audit.log` should now exist next to `SCAIS.exe` in `bin\Debug\net48\` | the file in Explorer, and its contents |
 | 8 | Sign out, sign back in as `student02`. The dashboard should report an unread message → **View my messages** | `frmMessages` |
-| 9 | Sign out, sign in as `admin` / `Admin@123` and visit every menu item, including both reports | `frmAdminDashboard`, `frmUserManagement`, `frmCourseCatalog` (both tabs), `frmAssignAdvisees`, `frmReports` (both reports) |
+| 9 | Sign out, sign in as `admin` / `Admin@123` and visit every menu item, including both reports | `frmAdminDashboard`, `frmUserManagement`, `frmCourseCatalog` (both tabs), `frmCourseOfferings`, `frmAssignAdvisees`, `frmReports` (both reports) |
 
 ### Why student02 sees IT221 blocked
 
@@ -127,6 +127,7 @@ The report has a placeholder for each of these.
 - [ ] `frmAdviseeList`
 - [ ] `frmCourseCatalog` — Courses tab
 - [ ] `frmCourseCatalog` — Rules tab
+- [ ] `frmCourseOfferings`
 - [ ] `frmUserManagement`
 - [ ] `frmAssignAdvisees`
 - [ ] `frmReports` — progression report
@@ -165,9 +166,18 @@ the report makes a claim about, and enough context to prove it is real code.
 |---|---|---|---|
 | 1 | NuGet restore error on `Microsoft.NETFramework.ReferenceAssemblies` | Offline, or restore blocked | Right-click the project → Manage NuGet Packages → Restore. On Windows this package is **optional** and can be deleted: the real 4.8 reference assemblies are present |
 | 2 | `SCAIS could not prepare its database` | LocalDB missing, or the instance has a different name | Check the connection string in `App.config`. Some installs use `(localdb)\v11.0` rather than `(localdb)\MSSQLLocalDB` |
-| 3 | Dashboard chrome looks wrong — the menu overlaps the header, or the header is cut off | A WinForms control z-order issue in `UI/DashboardForm.cs`, where docking is resolved by the order controls are added | Report it. It is a four-line reorder of the `Controls.Add` calls |
+| 3 | Dashboard chrome looks wrong — the menu overlaps the header, or the header is cut off | A WinForms control z-order issue in `UI/DashboardForm.cs`: docking is resolved in reverse z-order, so the control added last is docked first | **Fixed.** The strips are now added in reverse (menu, status, profile, header). The symptom was worse than it looks: the first menu caption and its function were hidden behind the header |
 | 4 | Null reference exception when clicking a grid | A `SelectionChanged` handler firing before a row exists | Send the stack trace. It will be a missing null guard |
 | 5 | *"The designer could not be shown"* when double-clicking a form | **Expected.** The forms are laid out in code rather than in a `.Designer.cs` file, which is a stated limitation (§7.5 of the report) | Ignore it. It does not affect running the application |
+
+Two further defects were found by the first real run and are also fixed: the login screen clipped
+the demonstration credentials (the label was capped at 60 pixels for four lines of text), and it was
+stretched to the theme's 760x500 minimum size although it is a fixed 520x430 dialog, which left the
+content stranded in one corner.
+
+**One environment note.** SQL Server LocalDB has no ARM64 build, so on Windows on ARM it runs under
+x64 emulation, and installing it needs administrator rights. An ordinary x64 Windows machine with
+Visual Studio has LocalDB already.
 
 Any other exception: see §7.
 
@@ -192,7 +202,7 @@ presentation:
 | Remaining task | Where |
 |---|---|
 | Redraw the 12 diagrams in Enterprise Architect and export them | `docs/uml/README.md` |
-| Insert the 12 screenshots and the code screenshots into the report | `docs/report/` — search for `[SCREENSHOT:` and `[CODE:` |
+| Insert the 13 screenshots and the code screenshots into the report | `docs/report/` — search for `[SCREENSHOT:` and `[CODE:` |
 | Complete the cover sheet and the work distribution plan with real names | `docs/05-work-distribution.md` |
 | Record the demonstration video | — |
 

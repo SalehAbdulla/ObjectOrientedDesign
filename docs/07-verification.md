@@ -75,16 +75,40 @@ ALL CHECKS PASSED
 
 ---
 
-## 2. Compilation verification
+## 2. Compilation and runtime verification
 
 The solution is compiled with the .NET Framework 4.8 reference assemblies, which
 means the compiler is checking against the real .NET Framework 4.8 surface area
 (the same reference assemblies Visual Studio uses).
 
-- Domain and interface layers: **build succeeded, 0 errors, 0 warnings**
+- Whole solution, `dotnet build src/SCAIS/SCAIS.sln`: **build succeeded, 0 errors, 0 warnings**
 
-This is recorded so that the report can state honestly that the code was
-compiled against .NET Framework 4.8 and not merely written.
+### 2.1 The runtime run
+
+The compiled `SCAIS.exe` was then driven by a harness that lives outside the repository (so the
+submitted solution is unchanged) and references the built assembly. **101 checks were run against a
+real SQL Server LocalDB 16.0 instance; 0 failed.** The run covered:
+
+| Area | What was exercised |
+|---|---|
+| `CourseOffering` (UC-07) | the capacity limits, the null guards, `SeatsRemaining`, `HasSpace`, `HasEnrollments` and the display strings |
+| `CourseOfferingRepository` | `GetBySemester` (30 offerings in the current term, 10 in the coming one), seats taken counted from real `Enrollments` rows, `Exists`, `Add` / `Update` / `Delete`, and `CopyFrom` including its idempotence |
+| Database bootstrap | `DatabaseManager.EnsureDatabase()` created the database from the embedded scripts, and `SplitIntoBatches` produced the 12 + 12 batches §1 records |
+| Seeded logins | `student02`, `adviser02` and `admin` all signed in through `AuthenticationService`; a wrong password and an unknown account were refused with the same message |
+| The advising workflow | IT221 was refused for `student02` naming IT220; a plan was built, submitted, found in the adviser's queue, approved with a remark, seen by the student, and produced a pending enrolment |
+| The Observer pattern | the approval wrote the student's notification **and** the `SCAIS-audit.log` file |
+| The user interface | the application was launched, and the login screen and the student dashboard were captured and inspected |
+
+### 2.2 The two defects the run found, and the fixes
+
+| Defect | Symptom | Fix |
+|---|---|---|
+| A student's assigned adviser was never loaded | `Student.Adviser` was always null, so `CourseAdvisingService.CreateRequest` filed every new plan with `AdviserId = NULL` and **the plan never appeared in any adviser's queue** — the submit → review → approve path could not complete. The student dashboard also always reported "Adviser: not yet assigned" | `UserRepository` now reads the assigned adviser in the same account query (two extra `LEFT JOIN`s) and sets `Student.Adviser` in `MapAccount` |
+| The dashboard chrome docked in the wrong order | WinForms resolves docking in reverse z-order, so adding the header first pushed it *down* over the top of the menu: the header appeared below the profile strip and the first menu caption and function were hidden behind it | `DashboardForm.BuildShell` now adds the strips in reverse: menu, status line, profile strip, header |
+
+The login screen also clipped the demonstration credentials (a 60-pixel label cap on four lines of
+text) and was stretched to the theme's 760x500 minimum although it is a fixed 520x430 dialog; both
+are corrected in `frmLogin`.
 
 ---
 
@@ -94,9 +118,10 @@ Being explicit about the limits of the evidence is better than overclaiming:
 
 | Not verified here | Why | Where it must be verified |
 |---|---|---|
-| The application running | Windows Forms cannot execute on macOS | The Windows virtual machine, by pressing F5 |
-| SQL Server **LocalDB** specifically | LocalDB is a Windows-only feature | The Windows virtual machine; the schema was validated against a T-SQL compatible engine |
+| Every screen clicked through by hand | The run exercised sign-in, the student dashboard and the whole service and data workflow; the remaining screens were not clicked through | The Windows virtual machine, by following the demonstration path in [`08-windows-first-run-and-test.md`](08-windows-first-run-and-test.md) |
 | The WinForms designer opening each form | Requires Visual Studio | The Windows virtual machine |
+| Behaviour on a machine with no SQL Server LocalDB | The run used LocalDB 16.0. The failure path was observed only as `EnsureDatabase` throwing SQL error 52, which is what `Program.PrepareDatabase` reports as *"SCAIS could not prepare its database"* | Any machine without LocalDB |
+| The printed output of the two reports | Printing needs a printer or a PDF driver | The Windows virtual machine |
 
 **The procedure for closing these three gaps is
 [`08-windows-first-run-and-test.md`](08-windows-first-run-and-test.md)** — the pre-flight

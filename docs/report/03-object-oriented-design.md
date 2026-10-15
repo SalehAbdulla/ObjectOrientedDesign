@@ -335,7 +335,7 @@ when it is compiled.
 ### 3.3.4 Polymorphism through an abstract generic base
 
 `SqlRepositoryBase<T>` implements `IRepository<T>` and declares the five CRUD operations
-abstract. Eight repositories override them with their own SQL. Callers hold an
+abstract. Nine repositories override them with their own SQL. Callers hold an
 `IRepository<T>` and never know which repository they have.
 
 ---
@@ -548,10 +548,10 @@ keeps it out of the screens.
 | Reused | By | How many times |
 |---|---|---|
 | `User.Authenticate` and the hashing | All three roles | 1 implementation, 3 roles |
-| `IRepository<T>` contract | All 8 repositories | 1 contract, 8 implementations |
-| `SqlRepositoryBase<T>` plumbing | All 8 repositories | ~190 lines of ADO.NET written once |
+| `IRepository<T>` contract | All 9 repositories | 1 contract, 9 implementations |
+| `SqlRepositoryBase<T>` plumbing | All 9 repositories | ~190 lines of ADO.NET written once |
 | `IEligibilityRule` | 5 rules, 3 calling screens | 1 contract, 5 algorithms, 3 callers |
-| `UiTheme` and `DashboardForm` | 11 forms, 3 dashboards | 1 definition of the appearance |
+| `UiTheme` and `DashboardForm` | 12 forms, 3 dashboards | 1 definition of the appearance |
 | `EligibilityValidator` | Student screen, adviser screen, compliance report | 1 validation, 3 consumers |
 
 ### Maintainability

@@ -3,7 +3,7 @@
 **Rubric: 10 marks — UI functionality 3, UI usability and consistency 2, integration with OO
 classes 3, overall system functionality 2.**
 
-The application has 12 screens. Each screenshot below must be captured from the running
+The application has 13 screens. Each screenshot below must be captured from the running
 application in Visual Studio; the placeholder marks where it goes.
 
 ---
@@ -133,6 +133,23 @@ reports.
 writes nothing. Every row was produced by `StudentNotificationService` reacting to a plan changing
 state.
 
+### Screen 13 — `frmCourseOfferings`, the timetable
+
+`[SCREENSHOT: frmCourseOfferings]`
+
+**Requirements satisfied:** UC-07. The catalogue says what *may* be taught, but only an offering
+says that a course *actually runs* this term, and a student cannot be advised to take a course that
+is not running.
+
+The screen lists the offerings of the chosen term with their places and how many are taken — the
+"taken" figure is counted from real `Enrollments` rows rather than stored twice — and it adds,
+resizes and withdraws offerings. Two rules are enforced by the **domain object** rather than by the
+screen: the capacity setter refuses a value outside 1–500, and `CourseOffering.HasEnrollments()`
+refuses to withdraw an offering that students are already enrolled in.
+
+**Classes used:** `CourseOfferingRepository`, `CourseRepository`, `SemesterRepository`,
+`CourseOffering`, `Course`, `Semester`.
+
 ---
 
 ## 4.2 Usability and consistency — 2 marks
@@ -180,6 +197,7 @@ contains SQL, and no form contains an eligibility rule.**
 | `frmAdviseeList` | `UserRepository`, `ReportService`, `CourseAdvisingService` | Three services, no SQL |
 | `frmUserManagement` | `UserRepository.Add`, `Update`, `Delete`, `UpdatePassword` | The polymorphic dispatch is in the repository, not the screen |
 | `frmCourseCatalog` | `CourseRepository`, `PrerequisiteRepository` | Domain validation surfaces through the `Course` and `Prerequisite` constructors |
+| `frmCourseOfferings` | `CourseOfferingRepository`, `SemesterRepository` | The screen holds no capacity rule and no "cannot withdraw" rule; both are asked of `CourseOffering` |
 | `frmReports` | `ReportService` | The screen renders rows; it performs no arithmetic |
 | All three dashboards | `DashboardForm` base class, `User.GetProfileSummary` | One implementation of the chrome, three polymorphic summaries |
 

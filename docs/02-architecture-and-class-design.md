@@ -36,7 +36,7 @@ all generated from. If these three artefacts disagree, marks are lost under
 └───────────────▲──────────────────────────────────────────────┘
                 │ ADO.NET (parameterised)
 ┌───────────────┴──────────────────────────────────────────────┐
-│  SQL Server LocalDB  —  SCAIS.mdf  (12 tables, 3NF)          │
+│  SQL Server LocalDB  —  SCAIS.mdf  (13 tables, 3NF)          │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -173,7 +173,30 @@ CourseRequest ◆──────────── 1..* CourseRequestLine
 - State transitions are guarded:
   `Submit()` → `Approve(remark)` → `Reject(remark)`, each firing `NotifyObservers()`.
 
-### 3.6 Enumerations
+### 3.6 `CourseOffering`  (the timetable: which course runs in which term)
+| Member | Type | Visibility | Note |
+|---|---|---|---|
+| `offeringId` | int | **private** | PK, exposed via `OfferingId { get; }` |
+| `course` | `Course` | **private** | the course that runs; null is rejected |
+| `semester` | `Semester` | **private** | the term it runs in; null is rejected |
+| `capacity` | int | **private** | setter validates 1–500 |
+| `enrolled` | int | **private** | read from `Enrollments`, **not** a column of the table |
+| `Capacity` | int | public get / public set (validated) | throws `ArgumentOutOfRangeException` |
+| `Enrolled` | int | public get / public set | the setter exists for the repository only |
+| `SeatsRemaining` | int | public get | `Capacity - Enrolled`, never negative |
+| `HasSpace()` | bool | public | is there a place left? |
+| `HasEnrollments()` | bool | public | the rule that stops an offering being withdrawn |
+| `GetDisplayName()` · `GetAvailabilityText()` | string | public | display strings for the screen |
+
+- The catalogue says **what may be taught** and the prerequisite rules say **what may follow
+  what**; neither says what **actually runs** this term. `CourseOffering` holds that third fact,
+  which is what UC-07 maintains.
+- It holds a `Course` and a `Semester` rather than two integer keys, so the screen can display
+  *"IT221 … in Semester 2, 2026"* without a second query.
+- `Enrolled` is deliberately derived: the number of students taking a course is a fact about
+  `Enrollments`, and storing it twice would let the two copies disagree.
+
+### 3.7 Enumerations
 | Enum | Values |
 |---|---|
 | `UserRole` | `Administrator`, `Adviser`, `Student` |
@@ -226,7 +249,7 @@ OpenDashboard(user.GetDashboardTitle(), user);   // "Student Dashboard", "Advise
 
 | Interface | Members | Implemented by | Why it exists |
 |---|---|---|---|
-| `IRepository<T>` | `T GetById(int)` · `List<T> GetAll()` · `bool Add(T)` · `bool Update(T)` · `bool Delete(int)` | `SqlRepositoryBase<T>` → `UserRepository`, `CourseRepository`, `EnrollmentRepository`, `PrerequisiteRepository`, `CourseRequestRepository` | One CRUD contract for all tables; the UI/services depend on the contract, so swapping LocalDB for a web API later (the brief mentions web/mobile expansion) requires no change to callers |
+| `IRepository<T>` | `T GetById(int)` · `List<T> GetAll()` · `bool Add(T)` · `bool Update(T)` · `bool Delete(int)` | `SqlRepositoryBase<T>` → `UserRepository`, `CourseRepository`, `CourseOfferingRepository`, `SemesterRepository`, `EnrollmentRepository`, `PrerequisiteRepository`, `CourseRequestRepository`, `NotificationRepository`, `SpecializationRepository` | One CRUD contract for all tables; the UI/services depend on the contract, so swapping LocalDB for a web API later (the brief mentions web/mobile expansion) requires no change to callers |
 | `IEligibilityRule` | `string RuleName { get; }` · `EligibilityResult Evaluate(Student, Course)` | `PrerequisiteRule`, `CorequisiteRule`, `CreditLimitRule`, `AlreadyCompletedRule` | Strategy pattern; new academic rules are added by adding a class, not by editing `EligibilityValidator` |
 | `IUserObserver` | `void OnRequestStatusChanged(CourseRequest, RequestStatus)` | `StudentNotificationService`, `AuditLogService` | Observer pattern; decouples approval logic from notification |
 
@@ -244,6 +267,8 @@ OpenDashboard(user.GetDashboardTitle(), user);   // "Student Dashboard", "Advise
 | `Prerequisite` | — | `Course` | Association (self-ref) | `* — 1` | Links dependent course to required course |
 | `Student` | — | `Enrollment` | Association | `1 — 0..*` | Academic record |
 | `Enrollment` | — | `Course` | Association | `* — 1` | Which course was taken |
+| `Course` | — | `CourseOffering` | Association | `1 — 0..*` | A course may run in many terms |
+| `Semester` | — | `CourseOffering` | Association | `1 — 0..*` | A term contains many offerings (UC-07) |
 | `Student` | — | `CourseRequest` | Association | `1 — 0..*` | A student submits many requests over time |
 | `CourseRequest` | ◆— | `CourseRequestLine` | **Composition** | `1 — 1..*` | Lines have no life without the request |
 | `CourseRequestLine` | — | `Course` | Association | `* — 1` | Each line requests one course |

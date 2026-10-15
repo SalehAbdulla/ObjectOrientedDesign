@@ -125,7 +125,7 @@ a primary actor rather than on its own behalf.
 | UC-04 | Maintain course catalogue | Administrator | Must | `UI/frmCourseCatalog.cs` — Courses tab |
 | UC-05 | Define prerequisite and corequisite rules | Administrator | Must | `UI/frmCourseCatalog.cs` — Rules tab |
 | UC-06 | Assign advisees to advisers | Administrator | Must | `UI/frmAssignAdvisees.cs` |
-| UC-07 | Define course offerings per semester | Administrator | Should | `DataAccess/CourseRepository.cs` |
+| UC-07 | Define course offerings per semester | Administrator | Should | `UI/frmCourseOfferings.cs` |
 | UC-08 | View academic record and course status | Student | Must | `UI/frmMyAcademicRecord.cs` — My record tab |
 | UC-09 | View eligible courses | Student | Must | `UI/frmMyAcademicRecord.cs` — Eligible tab |
 | UC-10 | Submit preferred courses for review | Student | Must | `UI/frmMyAcademicRecord.cs` — Eligible tab |

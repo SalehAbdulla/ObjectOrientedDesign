@@ -128,7 +128,10 @@ namespace SCAIS.UI
             UiTheme.ApplyForm(this, heading);
             this.ClientSize = new Size(900, 580);
 
-            this.Controls.Add(UiTheme.CreateHeader(heading));
+            // The header label is created here but added at the end of this method: WinForms
+            // resolves docking in reverse z-order, so the control added last is docked first
+            // and ends up outermost.
+            Label header = UiTheme.CreateHeader(heading);
 
             Panel profile = new Panel();
             profile.Dock = DockStyle.Top;
@@ -153,8 +156,6 @@ namespace SCAIS.UI
             this.notificationLabel.AutoSize = true;
             profile.Controls.Add(this.notificationLabel);
 
-            this.Controls.Add(profile);
-
             Panel status = new Panel();
             status.Dock = DockStyle.Bottom;
             status.Height = 36;
@@ -171,8 +172,6 @@ namespace SCAIS.UI
             signOut.MinimumSize = new Size(100, 28);
             status.Controls.Add(signOut);
 
-            this.Controls.Add(status);
-
             this.menuPanel = new FlowLayoutPanel();
             this.menuPanel.Dock = DockStyle.Fill;
             this.menuPanel.FlowDirection = FlowDirection.TopDown;
@@ -180,7 +179,16 @@ namespace SCAIS.UI
             this.menuPanel.AutoScroll = true;
             this.menuPanel.Padding = new Padding(20, 16, 20, 16);
             this.menuPanel.BackColor = Color.WhiteSmoke;
+            // Docking is resolved in reverse z-order: the control added last is docked first and
+            // therefore sits outermost. Adding the strips in this order - menu, status line,
+            // profile strip, header - is what puts the header at the very top, the profile strip
+            // beneath it, the status line at the bottom and the menu in what is left. Adding
+            // them in the order they read on screen (header first) pushed the header down over
+            // the top of the menu and hid the first menu caption and its function.
             this.Controls.Add(this.menuPanel);
+            this.Controls.Add(status);
+            this.Controls.Add(profile);
+            this.Controls.Add(header);
 
             this.Load += this.OnShellLoaded;
         }

@@ -77,7 +77,8 @@ without needing this file.
 8. Sign out and sign back in as **student02**. The dashboard now reports an unread
    message. Open **View my messages** to read the approval and the remark.
 9. Sign out and sign in as **admin** (`Admin@123`) to see the catalogue, the
-   prerequisite rules, user accounts, advisee assignment and the two reports.
+   timetable (**Maintain course offerings per semester**), the prerequisite rules,
+   user accounts, advisee assignment and the two reports.
 
 ---
 
@@ -94,7 +95,8 @@ without needing this file.
 | Observer | `Domain/CourseRequest.cs` (subject), `Interfaces/IUserObserver.cs`, `Observers/*.cs`, wired in `Business/CourseAdvisingService.AttachObservers` |
 | Strategy | `Interfaces/IEligibilityRule.cs` and the five rules in `Business/*Rule*.cs` |
 | Factory | `Domain/UserFactory.cs`, `UI/DashboardFactory.cs` |
-| Data layer | `DataAccess/SqlRepositoryBase.cs` and the eight repositories |
+| Timetable | `Domain/CourseOffering.cs`, `DataAccess/CourseOfferingRepository.cs`, `UI/frmCourseOfferings.cs` |
+| Data layer | `DataAccess/SqlRepositoryBase.cs` and the nine repositories |
 | Database | `Database/01_schema.sql` (13 tables, 3NF), `Database/02_seed.sql` (≥15 rows per table) |
 | Reports | `Business/ReportService.cs`, `UI/frmReports.cs` |
 
@@ -134,7 +136,12 @@ These are stated honestly rather than hidden, and are repeated in the project re
   one registration line, not a change to the validator.
 - The reports print through `PrintDocument` rather than a reporting component, so the
   layout is functional rather than highly formatted.
-- The application has not yet been run. It compiles cleanly against the .NET Framework
-  4.8 reference assemblies with zero errors and zero warnings, but Windows Forms cannot
-  execute on the machine it was written on, so the first execution happens in Visual
-  Studio on Windows.
+- The application was first executed during the verification run recorded in
+  [`docs/07-verification.md`](../../docs/07-verification.md). The whole solution builds with
+  `dotnet build` against the .NET Framework 4.8 reference assemblies with zero errors and zero
+  warnings, and 101 checks were then run against the compiled assembly with a real SQL Server
+  LocalDB instance: the domain model, the eligibility rules, the timetable repository, the seeded
+  logins and the full submit → review → approve workflow, including the notification and the audit
+  log. The screens have been exercised by hand (sign-in and the student dashboard) rather than
+  click-tested exhaustively, so the remaining screens still need the demonstration path run through
+  in Visual Studio.

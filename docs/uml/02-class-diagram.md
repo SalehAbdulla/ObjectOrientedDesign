@@ -203,6 +203,22 @@ classDiagram
         +GetDisplayName() string
     }
 
+    class CourseOffering {
+        -offeringId int
+        -capacity int
+        -enrolled int
+        +OfferingId int
+        +Course Course
+        +Semester Semester
+        +Capacity int
+        +Enrolled int
+        +SeatsRemaining int
+        +HasSpace() bool
+        +HasEnrollments() bool
+        +GetDisplayName() string
+        +GetAvailabilityText() string
+    }
+
     class Notification {
         -notificationId int
         -userId int
@@ -242,6 +258,8 @@ classDiagram
     Student "1" --> "0..*" Enrollment : has record
     Enrollment "0..*" --> "1" Course : studies
     Enrollment "0..*" --> "1" Semester : taken in
+    Course "1" --> "0..*" CourseOffering : is offered as
+    Semester "1" --> "0..*" CourseOffering : offers
     Course "1" --> "0..*" Prerequisite : is dependent in
     Prerequisite "0..*" --> "1" Course : requires
     Student "1" --> "0..*" CourseRequest : submits
@@ -268,6 +286,8 @@ Every relationship below is therefore stated with its reason.
 | `Specialization` | ◇— | `Course` | **Aggregation** | `1 — 0..*` | A track groups the subjects that belong to it, but a core subject belongs to every track and a course exists independently of any single track. |
 | `Student` | — | `Enrollment` | Association | `1 — 0..*` | The academic record: one entry per course the student has any status for. |
 | `Enrollment` | — | `Course` | Association | `* — 1` | Each entry is about one course. |
+| `Course` | — | `CourseOffering` | Association | `1 — 0..*` | A course may run in many terms. The offering carries the term-specific fact (the places available); the course itself is term-independent, which is why the catalogue and the timetable are separate. |
+| `Semester` | — | `CourseOffering` | Association | `1 — 0..*` | One term contains many offerings. With the row above, this is the timetable an administrator maintains under UC-07, and it is why `CourseOffering` is the only class that needs both a `Course` and a `Semester`. |
 | `Enrollment` | — | `Semester` | Association | `* — 1` | Each entry was taken in one term. |
 | `Course` | — | `Prerequisite` | Association | `1 — 0..*` | A course may be governed by several rules. |
 | `Prerequisite` | — | `Course` | Association | `* — 1` | A rule names the course that must be completed first. Together with the row above this is a **many-to-many self relationship on `Course`**, which is why the class appears on both ends. |
@@ -287,7 +307,7 @@ left out and why:
 |---|---|
 | `Administrator` → `Course`, `Student`, `User` | An administrator *maintains* these, but maintenance is a behaviour performed through a service, not a structural relationship the object holds. Drawing it would have implied that an administrator owns the catalogue. |
 | `Student` → `Prerequisite` | A student has no relationship with a rule. The rule is between two courses, and the student is only affected by it at the moment eligibility is evaluated. |
-| `Semester` → `Course` | There is no direct relationship. The two are connected through `CourseOffering` in the database and through `Enrollment` in the model, which is where the meaning actually lies. |
+| `Semester` → `Course` | There is no direct relationship. The two are connected through `CourseOffering`, which is the timetable, and through `Enrollment`, which is the academic record. A direct link would have claimed that a course belongs to one term, which is false: the catalogue outlives every term. |
 | `Notification` → `CourseRequest` | A notification is produced by a status change but does not reference the plan; it only carries text addressed to a user. Adding the link would have forced the notification to hold a plan it does not use. |
 | `User` → `Notification` as a collection | A user's messages are read on demand rather than held in memory. Holding them would have loaded every message of every account whenever a user was loaded. |
 
@@ -338,6 +358,7 @@ classDiagram
     class NotificationRepository
     class SpecializationRepository
     class SemesterRepository
+    class CourseOfferingRepository
 
     class DatabaseManager {
         <<Singleton>>
@@ -495,6 +516,7 @@ the one to work through carefully.
 - [ ] `CourseRequest * — 1 Semester`
 - [ ] `CourseRequest 1 — 1..* CourseRequestLine`
 - [ ] `CourseRequestLine * — 1 Course`
+- [ ] `Course 1 — 0..* CourseOffering` and `Semester 1 — 0..* CourseOffering`
 - [ ] `CourseRequest 1 — 0..* IUserObserver`
 
 ### Relationship types

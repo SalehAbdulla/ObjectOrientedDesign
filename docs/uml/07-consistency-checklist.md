@@ -44,7 +44,7 @@ the use cases that were promised.
 | UC-04 Maintain course catalogue | `CourseRepository.Add`, `Update`, `Delete` | §2.3 |
 | UC-05 Define prerequisite rules | `PrerequisiteRepository.Add`, `Delete` | §2.3 |
 | UC-06 Assign advisees | `UserRepository.SetStudentAdviser`, `Adviser.AssignAdvisee` | §2.3, §2.1 |
-| UC-07 Define offerings | `CourseRepository`, `SemesterRepository` | §2.3 |
+| UC-07 Define offerings | `CourseOfferingRepository.Add`, `Update`, `Delete`, `CourseOffering.Capacity` | §2.3, §2.1 |
 | UC-08 View record and status | `Student.GetCompletedCourses`, `GetInProgressCourses`, `GetPendingCourses` | §2.1 |
 | UC-09 View eligible courses | `CourseAdvisingService.GetEligibleCourses`, `EligibilityValidator.ValidateCatalogue` | §2.3 |
 | UC-10 Submit courses for review | `CourseAdvisingService.SubmitRequest`, `CourseRequest.Submit` | §2.3, §2.1 |
@@ -80,7 +80,7 @@ the use cases that were promised.
 
 - [ ] Every diagram is referenced by number in the report prose
 - [ ] The counts quoted in the report match the diagrams: 3 actors, 21 use cases,
-      13 domain classes, 3 interfaces, 13 tables, 3 patterns, 4 sequence diagrams
+      14 domain classes, 3 interfaces, 13 tables, 3 patterns, 4 sequence diagrams
 - [ ] Every OO concept claim in the report names a class that appears in the class diagram
 - [ ] Every design pattern section refers to its own diagram
 - [ ] The screenshots in the user interface section show the screens named in the use case

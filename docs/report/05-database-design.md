@@ -127,15 +127,15 @@ through SQL.
 
 | Operation | Where it is demonstrated in the running application |
 |---|---|
-| **Create** | Add a course and add a rule on `frmCourseCatalog`; create an account on `frmUserManagement`; submit a plan on `frmMyAcademicRecord` |
+| **Create** | Add a course and add a rule on `frmCourseCatalog`; add an offering for a term on `frmCourseOfferings`; create an account on `frmUserManagement`; submit a plan on `frmMyAcademicRecord` |
 | **Read** | Every grid on every screen, including the two reports |
-| **Update** | Save changes on `frmUserManagement`; update a course on `frmCourseCatalog`; approve or reject a plan on `frmCourseRequestReview`; assign or clear an adviser on `frmAssignAdvisees`; mark messages read on `frmMessages` |
-| **Delete** | Delete an account, a course or a rule; and the cascade from a deleted plan to its lines |
+| **Update** | Save changes on `frmUserManagement`; update a course on `frmCourseCatalog`; change the places of an offering on `frmCourseOfferings`; approve or reject a plan on `frmCourseRequestReview`; assign or clear an adviser on `frmAssignAdvisees`; mark messages read on `frmMessages` |
+| **Delete** | Delete an account, a course, a rule or an offering; and the cascade from a deleted plan to its lines |
 
 The repositories that carry the writes are `UserRepository` (with `UpdatePassword` and
-`SetStudentAdviser`), `CourseRepository` (with `CodeExists`), `PrerequisiteRepository`,
-`EnrollmentRepository`, `CourseRequestRepository`, `NotificationRepository` (with `MarkAllAsRead`)
-and `SpecializationRepository`.
+`SetStudentAdviser`), `CourseRepository` (with `CodeExists`), `CourseOfferingRepository` (with
+`Exists` and `CopyFrom`), `PrerequisiteRepository`, `EnrollmentRepository`, `CourseRequestRepository`,
+`NotificationRepository` (with `MarkAllAsRead`) and `SpecializationRepository`.
 
 ---
 

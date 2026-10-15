@@ -12,14 +12,14 @@ storing its data in SQL Server LocalDB and designed in Sparx Enterprise Architec
 |---|---|
 | Actors | 3 |
 | Use cases | 21 |
-| Domain classes | 13 |
+| Domain classes | 14 |
 | Service and data classes | 15 |
 | Interfaces | 3 |
 | Design patterns | 3 (Singleton, Observer, Strategy) |
 | Sequence diagrams | 4 |
 | Database tables | 13, in 3NF |
 | Seed records | at least 15 in every table; 160 enrolments |
-| Screens | 12 |
+| Screens | 13 |
 | Reports | 2 |
 | Lines of C# | approximately 10,400 |
 | Lines of T-SQL | approximately 770 |
@@ -41,7 +41,7 @@ Each requirement from the brief, and where it is satisfied.
 | Adviser: recommend courses based on eligibility | The eligibility grid on `frmAdviseeList` is the recommendation |
 | Adviser: approve or modify course plans | `frmCourseRequestReview`, with a remark required for either decision |
 | Student: view record, eligible courses, submit and view remarks | The three tabs of `frmMyAcademicRecord` |
-| Administrator: manage accounts, catalogue, rules, advisee assignment | `frmUserManagement`, `frmCourseCatalog`, `frmAssignAdvisees` |
+| Administrator: manage accounts, catalogue, rules, offerings, advisee assignment | `frmUserManagement`, `frmCourseCatalog`, `frmCourseOfferings`, `frmAssignAdvisees` |
 | At least two reports | Course progression and prerequisite compliance, both printable and exportable |
 | At least two design patterns, not Singleton alone | Singleton, Observer and Strategy |
 | ERD in third normal form | 13 tables, with the evidence for 1NF, 2NF and 3NF stated in §5.1 |
@@ -78,7 +78,7 @@ made cheap:
    is defined.
 4. **The appearance is defined once.** Twelve screens share `UiTheme`, and three dashboards share
    `DashboardForm`.
-5. **Eight repositories share one implementation of the ADO.NET plumbing.** The parameterisation, the
+5. **Nine repositories share one implementation of the ADO.NET plumbing.** The parameterisation, the
    connection handling, the transaction helpers and the typed readers are written once.
 
 ---
@@ -125,9 +125,14 @@ position across completed, in-progress and pending courses is visible in one pla
 The system was designed before it was built, and the design was then verified rather than assumed.
 The database scripts were executed against a live SQL Server engine and every claim about the data
 was checked by query. The application was compiled against the .NET Framework 4.8 reference
-assemblies with zero errors and zero warnings. Where a claim could not be verified in the environment
-the work was done in — Windows Forms cannot execute on macOS — that is stated rather than glossed
-over.
+assemblies with zero errors and zero warnings, and it was then run: 101 checks were executed against
+the compiled application and a real SQL Server LocalDB instance, covering the domain model, the five
+eligibility rules, the timetable repository, the seeded logins and the complete submit → review →
+approve workflow. That run found two defects that review alone had missed — a student's assigned
+adviser was never loaded, so no plan a student submitted ever reached an adviser's queue, and the
+dashboard chrome docked in the wrong order so the first menu function was hidden behind the header.
+Both are fixed and are recorded in [`../07-verification.md`](../07-verification.md), which also
+states plainly what has still not been verified rather than glossing over it.
 
 The object-oriented design is applied because each feature had a reason, not because the rubric
 listed the features. Encapsulation protects the invariant that a completed course has a grade.

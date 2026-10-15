@@ -43,12 +43,24 @@ SELECT  u.UserId, u.Username, u.PasswordHash, u.FullName, u.Email, u.Role, u.IsA
         a.Department            AS Department,
         a.Office                AS Office,
         ad.AdminId              AS AdminId,
-        ad.AccessLevel          AS AccessLevel
+        ad.AccessLevel          AS AccessLevel,
+        -- The adviser assigned to this student, read in the same query so that a student
+        -- object always knows who reviews its plans. The credential is deliberately not
+        -- selected: this adviser is displayed and identified, never authenticated.
+        sau.UserId              AS StudentAdviserUserId,
+        sau.Username            AS StudentAdviserUsername,
+        sau.FullName            AS StudentAdviserName,
+        sau.Email               AS StudentAdviserEmail,
+        sau.IsActive            AS StudentAdviserIsActive,
+        sa.Department           AS StudentAdviserDepartment,
+        sa.Office               AS StudentAdviserOffice
 FROM         dbo.Users           AS u
-LEFT JOIN    dbo.Students        AS s  ON s.UserId  = u.UserId
-LEFT JOIN    dbo.Specializations AS sp ON sp.SpecializationId = s.SpecializationId
-LEFT JOIN    dbo.Advisers        AS a  ON a.UserId  = u.UserId
-LEFT JOIN    dbo.Administrators  AS ad ON ad.UserId = u.UserId";
+LEFT JOIN    dbo.Students        AS s   ON s.UserId   = u.UserId
+LEFT JOIN    dbo.Specializations AS sp  ON sp.SpecializationId = s.SpecializationId
+LEFT JOIN    dbo.Advisers        AS a   ON a.UserId   = u.UserId
+LEFT JOIN    dbo.Administrators  AS ad  ON ad.UserId  = u.UserId
+LEFT JOIN    dbo.Advisers        AS sa  ON sa.AdviserId = s.AdviserId
+LEFT JOIN    dbo.Users           AS sau ON sau.UserId = sa.UserId";
 
         /// <inheritdoc />
         public override User GetById(int id)
@@ -243,6 +255,28 @@ LEFT JOIN    dbo.Administrators  AS ad ON ad.UserId = u.UserId";
                     ToInt(reader, "SpecializationId"),
                     ToText(reader, "SpecializationName"),
                     ToText(reader, "SpecializationDescription"));
+            }
+
+            // The assigned adviser is part of the student's own state rather than something
+            // each screen has to look up. Two behaviours depend on it: the plan a student
+            // submits must be addressed to the adviser who reviews it (a plan with no adviser
+            // never appears in any adviser's queue), and the student dashboard names the
+            // adviser. The columns come from the same query, so this costs no extra round trip.
+            if (student != null && !IsNull(reader, "StudentAdviserId"))
+            {
+                UserRecord adviserRecord = new UserRecord();
+                adviserRecord.UserId = ToInt(reader, "StudentAdviserUserId");
+                adviserRecord.Username = ToText(reader, "StudentAdviserUsername");
+                adviserRecord.PasswordHash = string.Empty;
+                adviserRecord.FullName = ToText(reader, "StudentAdviserName");
+                adviserRecord.Email = ToText(reader, "StudentAdviserEmail");
+                adviserRecord.Role = UserRole.Adviser;
+                adviserRecord.IsActive = ToBool(reader, "StudentAdviserIsActive");
+                adviserRecord.RoleRecordId = ToInt(reader, "StudentAdviserId");
+                adviserRecord.Department = ToText(reader, "StudentAdviserDepartment");
+                adviserRecord.Office = ToText(reader, "StudentAdviserOffice");
+
+                student.Adviser = (Adviser)UserFactory.Create(adviserRecord);
             }
 
             return user;

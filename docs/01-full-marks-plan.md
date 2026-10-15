@@ -131,7 +131,7 @@ Write the *limitations* paragraph — most teams forget it and lose 2 easy marks
 | UC-19 | System | Notify student when a request is approved/rejected | Should | **SD-3** |
 
 **Counts to quote in the report:** 3 actors, 19 use cases, 4+ sequence diagrams,
-~18 classes, 12 tables, 3 design patterns, 3 reports.
+~18 classes, 13 tables, 3 design patterns, 2 reports.
 
 ---
 
@@ -139,7 +139,7 @@ Write the *limitations* paragraph — most teams forget it and lose 2 easy marks
 
 ### 4.4 Database (10 marks)
 
-- 3NF, 12 tables, PK/FK on every relationship, documented in an ERD.
+- 3NF, 13 tables, PK/FK on every relationship, documented in an ERD.
 - **≥15 mock records in every table** (explicit requirement).
 - A real data layer: `IRepository<T>` + concrete repositories using ADO.NET
   (`SqlConnection` / `SqlCommand` / `SqlDataReader`), parameterised queries only.
@@ -185,7 +185,7 @@ work-distribution plan, and a **working model**.
 - [ ] Class diagram: visibility on every member, multiplicity on every association, one composition, one aggregation, one inheritance tree, one interface realisation
 - [ ] ≥4 sequence diagrams including login/redirect and request approval
 - [ ] UML is **consistent**: class names in sequence diagrams match the class diagram; DB entities match the class diagram's persistent classes
-- [ ] ERD: 12 tables, all PK/FK, cardinalities, 3NF noted
+- [ ] ERD: 13 tables, all PK/FK, cardinalities, 3NF noted
 
 ### Code
 - [ ] Solution builds with **0 errors** on .NET Framework 4.8
