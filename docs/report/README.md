@@ -70,6 +70,10 @@ class name and the line numbers are visible. Each screenshot must show:
 Run the application, resize the window so nothing is cut off, and capture the client area
 only. `Alt` + `Print Screen` captures the active window on Windows.
 
+**[`../08-windows-first-run-and-test.md`](../08-windows-first-run-and-test.md)** has the exact
+nine-step sequence that produces every screenshot in one pass, together with the full
+checklist of screens and code files, and what to do when the first run fails.
+
 ---
 
 ## 5. Honesty notes to keep in the report
