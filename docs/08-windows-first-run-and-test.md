@@ -41,6 +41,10 @@ If LocalDB is the problem, the application reports it itself with a message box 
 
 ## 3. Build and run
 
+From Git Bash in the repository root, **`./run.sh`** does the checks in §2, builds the solution and
+starts the application in one command (`--no-build` skips the build, `--check` only reports the
+prerequisites). In Visual Studio:
+
 1. Make sure the toolbar shows **Debug** and **Any CPU**.
 2. Press **F5**.
 

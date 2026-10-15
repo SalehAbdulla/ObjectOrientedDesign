@@ -75,6 +75,11 @@ Submission zip must be named `S1G1` (Stream 1, Group 1) and contain: Project Rep
 5. [`src/SCAIS/README.md`](src/SCAIS/README.md) — the application's own README: architecture, credentials and the demonstration script.
 6. [`docs/07-verification.md`](docs/07-verification.md) — what was verified and how, including the database checks run against a live engine.
 
+> **Quickest path on Windows:** run **`./run.sh`** from Git Bash. It checks that the .NET SDK
+> and SQL Server LocalDB are present, builds the solution and starts the application; `--no-build`
+> skips the build and `--check` only reports the prerequisites. The screenshots in
+> [`docs/screenshots/`](docs/screenshots) were captured this way.
+
 ### The diagrams (for redrawing in Enterprise Architect)
 7. [`docs/uml/README.md`](docs/uml/README.md) — the diagram index and the EA redraw guide.
 8. The twelve diagram sources are in [`docs/uml/`](docs/uml), each with an element checklist. Rendered PNGs are in [`docs/uml/png/`](docs/uml/png).

@@ -17,6 +17,20 @@
 
 ## 2. Run it
 
+The quickest way on Windows is the script in the repository root, which does the checks, the
+build and the start in one command:
+
+```bash
+./run.sh              # check the prerequisites, build, then start the application
+./run.sh --no-build   # start the application that has already been built
+./run.sh --check      # only report whether dotnet and LocalDB are present
+```
+
+It needs Git Bash, MSYS2 or Cygwin. SCAIS is Windows Forms on .NET Framework 4.8 with SQL Server
+LocalDB, so it runs on Windows only, and the script says so plainly if it is run anywhere else.
+
+Or do it by hand in Visual Studio:
+
 1. Open **`src/SCAIS/SCAIS.sln`** in Visual Studio.
 2. Make sure the toolbar shows **Debug** and **Any CPU**.
 3. Press **F5**.
